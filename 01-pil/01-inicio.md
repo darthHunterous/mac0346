@@ -2,6 +2,7 @@
 * Uso de `5.1` pois `LuaJit` não foi portado para a `5.3`
 * `LuaVer` para gerenciar versões
 * `luarocks` para plugins
+* [Book - Programming in Lua](https://www.lua.org/pil/contents.html)
 
 ### Executar script
 * `lua hello.lua`

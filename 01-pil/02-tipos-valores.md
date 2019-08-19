@@ -60,3 +60,55 @@
     --]]
     ```
     * `-v`: tab vertical equivale a dar linefeed e continuar escrevendo na mesma coluna que se escreveria na linha original
+* `\ddd`: indica um caracter de código ASCII correspondente, em decimal
+* **Strings de múltiplas linhas**: entre `[[...]]`
+    * Não interpretam caracteres escapados
+    * Ignora newlines no começo
+* **Conversão automática de strings para números**: qualquer operação numérica aplicada em string converte para número
+* Operador `..`: concatena strings
+* Strings são diferentes de números: `10 == "10"` retorna `false`
+    * Converter string para número: `tonumber()`, retorna `nil` se a string não representa um número
+    * Converter número para string: `tostring()` ou concatenar o número com `""`
+
+### 2.5 - Tabelas
+* Array associativo: pode ser indexado por números ou qualquer outro valor na linguagem (exceto `nil`)
+* Sem tamanho fixo, elementos podem ser adicionados dinamicamente
+* Único mecanismo de estruturação de dados em Lua
+* Pacotes são representados com tabelas também
+* Tabelas não são valores nem variáveis, são objetos
+* Programa manipula apenas ponteiros às tabelas
+* Não são declaráveis, mas construídas com `{}`, que cria a tabela e armazena a referência
+* Quando não há mais referências a uma tabela, o coletor de lixo eventualmente deletará
+* Se um campo de tabela não foi inicializado, ele vale `nil`
+* Atribuir `nil` a um campo o deleta
+* Funcionam similar a variáveis globais pois Lua as armazena em uma tabela
+* **Açúcar Sintático**: `a.x` é equivalente a `a["x"]` e diferente de `a[x]`
+    ```lua
+    a = {}
+    x = "y"
+    a[x] = 10  -- coloca 10 em a["y"]
+    print(a[x])  --> 10  -- valor de a["y"]
+    print(a.x)  --> nil  -- valor do campo inexistente a["x"]
+    print(a.y)  --> 10  -- valor de a["y"]
+    ```
+* **Array convencional**: usar tabela com chaves inteiras
+    * Não há como declarar tamanho, apenas inicializar com os elementos necessários
+    * A convenção é iniciar os arrays do `1`
+* **Iterando arrays**: `ipairs` itera um array parando encerrando em seu primeiro elemento `nil` (convenção para representar o fim do array)
+    ```lua
+    for i,line in ipairs(a) do
+        print(line)
+    end
+    ```
+
+### 2.6 - Funções
+* Valores de primeira classe: podem ser armazenadas em variáveis, passadas como argumentos para outras funções e retornadas como resultados
+    * Permite redefinir funções para novas funcionalidades ou apagar uma função para ter segurança ao executar um código
+* Suporte a programação funcional, com funções encaixadas
+* Lua pode executar funções em Lua e em C
+
+### 2.7 - Userdata e Threads
+* Userdata permite armazenar qualquer dado em C em variáveis Lua
+    * Sem operações definidas, só atribuição e igualdade
+    * Representa novos tipos criados por uma aplicação ou biblioteca escrita em C
+* Threads são representadas pela corrotinas
